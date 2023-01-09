@@ -1,6 +1,5 @@
 rows = int(input())
-longest = set()
-result = set()
+longest = []
 for row in range(rows):
     first_range, second_range = input().split("-")
     first_start, first_end = (int(x) for x in first_range.split(","))
@@ -8,10 +7,10 @@ for row in range(rows):
     first_set = set(range(first_start, first_end + 1))
     second_set = set(range(second_start, second_end + 1))
     result = first_set.intersection(second_set)
-    if len(result) > len(longest):
-        longest = result
+    longest.append(result)
 
-print(f"Longest Intersection is [{', '.join(str(x) for x in result)}] with length {len(longest)}")
+longest = sorted(longest, key=len, reverse=True)
+print(f"Longest intersection is [{', '.join(str(x) for x in longest[0])}] with length {len(longest[0])}")
 
 # test inputs:
 

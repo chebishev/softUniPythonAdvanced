@@ -16,9 +16,17 @@ for ch in expression:
             first_number = current_numbers.popleft()
             second_number = current_numbers.popleft()
             result = operations_dict[ch](first_number, second_number)
-            current_numbers.append(result)
+            current_numbers.appendleft(result)
 
-    if ch.isdigit():
+    else:
         current_numbers.append(int(ch))
 
-print(current_numbers.pop())
+print(abs(current_numbers.pop()))
+
+# test inputs:
+
+# 6 3 - 2 1 * 5 /
+
+# 2 2 - 1 *
+
+# 10 23 * 4 2 / 30 10 + 100 50 - 2 -1 *

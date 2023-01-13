@@ -10,20 +10,19 @@ operations_dict = {
     "+": lambda a, b: a + b,
     "-": lambda a, b: a - b,
     "*": lambda a, b: a * b,
-    "/": lambda a, b: a // b
+    "/": lambda a, b: a / b
 }
 
 while working_bees and nectar_stack:
     current_bee = working_bees.popleft()
     current_nectar = nectar_stack.pop()
-    if current_nectar < current_bee:
-        while current_nectar < current_bee:
-            if nectar_stack:
-                current_nectar = nectar_stack.pop()
-            else:
-                loop_interupted = True
-                working_bees.appendleft(current_bee)
-                break
+    while current_nectar < current_bee:
+        if nectar_stack:
+            current_nectar = nectar_stack.pop()
+        else:
+            loop_interupted = True
+            working_bees.appendleft(current_bee)
+            break
     if loop_interupted:
         break
     current_symbol = symbols.popleft()

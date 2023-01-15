@@ -1,4 +1,6 @@
 from collections import deque
+
+
 def check_color(color):
     if color in main_colors or color in secondary_colors:
         return True
@@ -15,7 +17,7 @@ def check_main(color):
         return output_list
 
 
-main_colors = tuple(["red", "yellow", "blue"])
+main_colors = ("red", "yellow", "blue")
 secondary_colors = {
     "orange": ["yellow", "red"],
     "purple": ["blue", "red"],
@@ -25,36 +27,26 @@ initial_string = deque(x for x in input().split())
 output_list = []
 
 while initial_string:
-    if len(initial_string) == 1:
-            current_color = initial_string.pop()
-            if check_color(current_color):
-                output_list.append(current_color)
-            else:
-                break
     first_substring = initial_string.popleft()
-    second_substring = initial_string.pop()
+    if not initial_string:
+        second_substring = ""
+    else:
+        second_substring = initial_string.pop()
     left_first = first_substring + second_substring
     right_first = second_substring + first_substring
     if check_color(left_first):
         output_list.append(left_first)
-        continue
     elif check_color(right_first):
         output_list.append(right_first)
-        continue
     else:
         first_substring = first_substring[:-1]
+        if first_substring:
+            initial_string.insert(len(initial_string) // 2, first_substring)
         second_substring = second_substring[:-1]
-        if len(first_substring) == 0 and len(second_substring) == 0:
-            break
-        if len(initial_string) > 0 and len(initial_string) % 2 != 0:
-            index = (len(initial_string) // 2)  + 1
-        else:
-            index = len(initial_string) // 2
-        initial_string.insert(index, first_substring)
-        initial_string.insert(index, second_substring)
+        if second_substring:
+            initial_string.insert(len(initial_string) // 2, second_substring)
 
-for key in secondary_colors:
-    check_main(key)
+[check_main(color) for color in output_list if color in secondary_colors]
 print(output_list)
 
 # test inputs:

@@ -1,30 +1,33 @@
-initial_string = input().split()
-main_colors = {"yellow", "red", "blue"}
-mixed_colors = {
-    "orange": {"yellow, red"},
-    "purple": {"red", "blue"},
-    "green": {"blue", "yellow"}
-}
-found_colors = []
-while initial_string:
-    first_part = initial_string.pop(0)
-    second_part = initial_string.pop() if initial_string else ""
-    left_first = first_part + second_part
-    right_first = second_part + first_part
-    if left_first in main_colors or left_first in mixed_colors:
-        found_colors.append(left_first)
-    elif right_first in main_colors or right_first in mixed_colors:
-        found_colors.append(right_first)
-    else:
-        if left_first:
-            initial_string.insert(len(initial_string) // 2, first_part[:-1])
-        if right_first:
-            initial_string.insert(len(initial_string) // 2, second_part[:-1])
+from collections import deque
 
-for color in mixed_colors:
-    if mixed_colors[color] not in found_colors:
-        if color in found_colors:
-            found_colors.remove(color)
+
+initial_string = deque(input().split())
+
+colors = {'yellow', 'red', 'blue', 'green', 'orange', 'purple'}
+mixed_colors = {
+    'orange': {'yellow', 'red'},
+    'purple': {'red', 'blue'},
+    'green': {'blue', 'yellow'}
+}
+
+found_colors = []
+
+while initial_string:
+    first_part = initial_string.popleft()
+    second_part = initial_string.pop() if initial_string else ''
+
+    for color in (first_part + second_part, second_part + first_part):
+        if color in colors:
+            found_colors.append(color)
+            break
+    else:
+        for part in (first_part[:-1], second_part[:-1]):
+            if part:
+                initial_string.insert(len(initial_string) // 2, part)
+
+for color in set(mixed_colors.keys()).intersection(found_colors):
+    if not mixed_colors[color].issubset(found_colors):
+        found_colors.remove(color)
 
 print(found_colors)
 

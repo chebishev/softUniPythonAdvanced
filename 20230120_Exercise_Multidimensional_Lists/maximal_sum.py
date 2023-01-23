@@ -5,6 +5,7 @@ def check_rectangle(row_index, col_index):
             checked_sum += matrix[checked_row][checked_col]
     return checked_sum
 
+
 rows, cols = list(map(int, input().split()))
 matrix = [[int(x) for x in input().split()] for row in range(rows)]
 max_sum = float("-inf")

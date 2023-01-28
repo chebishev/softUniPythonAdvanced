@@ -1,5 +1,12 @@
 def even_odd_filter(**kwargs):
-    pass
+    
+    for k, v in kwargs.items():
+        if k == "even":
+            kwargs[k] = [x for x in v if x % 2 == 0]
+        else:
+            kwargs[k] = [x for x in v if x % 2 != 0]
+
+    return dict(sorted(kwargs.items(), key=lambda x: -len(x[1])))
 
 
 print(even_odd_filter(

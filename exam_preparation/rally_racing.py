@@ -27,10 +27,7 @@ while True:
     
     if direction == "End":
         matrix[start_coordinates[0]][start_coordinates[1]] = "C"
-        if finish_reached:
-            print(f"Racing car {racing_number} finished the stage!")
-        else:
-            print(f"Racing car {racing_number} DNF.")
+        print(f"Racing car {racing_number} DNF.")
         break
 
     next_row = start_coordinates[0] + directions[direction][0]
@@ -39,18 +36,26 @@ while True:
     last_position = (next_row, next_col)
     
     if current_move == "F":
-        finish_reached = True
         distance_covered += 10
+        print(f"Racing car {racing_number} finished the stage!")
+        matrix[last_position[0]][last_position[1]] = "C"
+        break
     
     elif current_move == "T":
         current_tunnel = {(next_row, next_col)}
         second_tunnel = tunnels.difference(current_tunnel)
+
         matrix[next_row][next_col] = "."
-        last_position = (second_tunnel[0], second_tunnel[1])
+        last_position = second_tunnel.pop()
         distance_covered += 30
-    
+    else:
+        distance_covered += 10
+
     matrix[last_position[0]][last_position[1]] = "."
     start_coordinates = last_position
+
+print(f"Distance covered {distance_covered} km.")
+[print(*row, sep="") for row in matrix]
 
 # test inputs:
 # 5

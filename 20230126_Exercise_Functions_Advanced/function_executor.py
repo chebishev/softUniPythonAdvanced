@@ -17,7 +17,7 @@ print(func_executor(
     (sum_numbers, (1, 2)), 
     (multiply_numbers, (2, 4))
 ))
-###############################################
+
 def make_upper(*strings):
     result = tuple(s.upper() for s in strings)
     return result

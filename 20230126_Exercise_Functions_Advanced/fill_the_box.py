@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def fill_the_box(*args):
     box_queue = deque(x for x in args)
     height = int(box_queue.popleft())
@@ -15,7 +16,6 @@ def fill_the_box(*args):
             start_element += int(current_element)
         return start_element
 
-
     while True:
         next_line = box_queue.popleft()
         if next_line == "Finish":
@@ -29,6 +29,7 @@ def fill_the_box(*args):
                 return f"No more free space! You have {cubes_rest(box_queue, 0)} more cubes."
             else:
                 box_volume -= next_line
+
 
 print(fill_the_box(2, 8, 2, 2, 1, 7, 3, 1, 5, "Finish"))
 print(fill_the_box(5, 5, 2, 40, 11, 7, 3, 1, 5, "Finish"))

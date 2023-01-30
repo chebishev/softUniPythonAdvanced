@@ -1,5 +1,4 @@
 def even_odd_filter(**kwargs):
-    
     for k, v in kwargs.items():
         if k == "even":
             kwargs[k] = [x for x in v if x % 2 == 0]

@@ -7,11 +7,14 @@ def forecast(*weather):
     }
     weather_cities = {}    # corresponding weather for the current city
     weather_dictionary = {}  # number instead of weather for easier sorting
+
     for item in weather:
         weather_dictionary[item[0]] = weather_translate[item[1]]  # filling numbers as values
         weather_cities[item[0]] = item[1]   # filling weather as value
+
     sorted_weather = dict(sorted(weather_dictionary.items(), key=lambda x: (x[1], x[0])))
     output_list = []
+
     for k in sorted_weather:        # getting the weather condition by current city
         output_list.append(f"{k} - {weather_cities[k]}")
 

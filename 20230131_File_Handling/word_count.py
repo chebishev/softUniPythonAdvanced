@@ -22,3 +22,7 @@ file = open("output.txt", "w")
 for k, v in sorted_dictionary.items():
     file.write(f"{k} - {v}\n")
 file.close()
+
+# test input:
+
+# quick is fault

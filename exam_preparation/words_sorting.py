@@ -1,11 +1,13 @@
 def words_sorting(*words):
+
     words_dictionary = {}
+
     for word in words:
         if word not in words_dictionary:
             words_dictionary[word] = 0
         words_dictionary[word] = sum([ord(x) for x in word])
+
     sum_values = 0
-    sorted_dictionary = None
     for k in words_dictionary:
         sum_values += words_dictionary[k]
 
@@ -26,18 +28,17 @@ print(
         'escape',
         'charm',
         'mythology'
-  ))
+    ))
 
 print(
     words_sorting(
         'escape',
         'charm',
         'eye'
-  ))
+    ))
 
 print(
     words_sorting(
-        'cacophony',         
+        'cacophony',
         'accolade'
-  ))
-
+    ))

@@ -1,33 +1,14 @@
 from collections import deque
 
 
-def check_diagonal(player, row, col):
-    diagonals_dictionary = {
-        "White": {
-            "left": (-1, -1),
-            "right": (-1, 1)
-        },
-        "Black": {
-            "left": (1, 1),
-            "right": (1, -1)
-        }
-        
-    }
-    for direction, position in diagonals_dictionary[player].items():
-        row_check = row + position[0]
-        col_check = col + position[1]
-        if chess_board[row_check][col_check] != "-":
-            return (True, row_check, col_check)
-    else:
-        return (False,)
+def check_diagonal(coordinates):
+    if coordinates == players_info[players[1]]['position']:
+        return True
 
 
-def check_queen(player, row):
-    if player == "White" and row == 0:
-        return True
-    elif player == "Black" and row == 7:
-        return True
-    return False
+def winning_position():
+    x, y = players_info[players[1]]['position']
+    return f"{chess_board_dict['cols'][y]}{chess_board_dict['rows'][x]}"
 
 
 chess_board_dict = {
@@ -53,69 +34,61 @@ chess_board_dict = {
     }
 }
 
-moves = {
-    "White": (-1, 0),
-    "Black": (1, 0)
-}
-
-players = deque(["White", "Black"])
-board_size = 8
 chess_board = []
-
-current_positions = {
-    "White": [],
-    "Black": []
-}
-
-for row in range(board_size):
+white_position = (0, 0)
+black_position = (0, 0)
+for row in range(8):
     current_row = input().split()
     chess_board.append(current_row)
-
     if "w" in current_row:
-        current_positions["White"] = [row, current_row.index("w")]
-
+        white_position = (row, current_row.index("w"))
     if "b" in current_row:
-        current_positions["Black"] = [row, current_row.index("b")]
+        black_position = (row, current_row.index("b"))
+
+players = deque(["White", "Black"])
+players_info = {
+    "White": {
+        "position": white_position,
+        "move": -1,
+        "diagonals": {
+            "left": (-1, -1),
+            "right": (-1, 1)
+        },
+        "queen": 0
+    },
+    "Black": {
+        "position": black_position,
+        "move": 1,
+        "diagonals": {
+            "left": (-1, -1),
+            "right": (-1, 1)
+        },
+        "queen": 7
+    }
+}
 
 while True:
 
     current_player = players[0]
-    current_row = current_positions[current_player][0]
-    current_col = current_positions[current_player][1]
-    
-    result = check_diagonal(current_player, current_row, current_col)
-    if result[0]:
-        print(f"Game over! {current_player} win, capture on {chess_board_dict['cols'][result[2]]}{chess_board_dict['rows'][result[1]]}.")
+    current_row, current_col = players_info[current_player]['position']
+    left_diagonal = (current_row + players_info[current_player]['diagonals']["left"][0],
+                     current_col + players_info[current_player]['diagonals']["left"][1])
+    right_diagonal = (current_row + players_info[current_player]['diagonals']["right"][0],
+                      current_col + players_info[current_player]['diagonals']["right"][1])
+    if check_diagonal(left_diagonal):
+        square = winning_position()
+        print(f"Game over! {current_player} win, capture on {square}.")
+        break
+    elif check_diagonal(right_diagonal):
+        square = winning_position()
+        print(f"Game over! {current_player} win, capture on {square}.")
         break
 
-    new_row = current_row + moves[current_player][0]
-    new_col = current_col + moves[current_player][1]
-    
-    if check_queen(current_player, new_row):
-        print(f"Game over! {current_player} pawn is promoted to a queen at {chess_board_dict['cols'][new_col]}{chess_board_dict['rows'][new_row]}.")
+    new_row = current_row + players_info[current_player]['move']
+    if new_row == players_info[current_player]["queen"]:
+        square = f"{chess_board_dict['cols'][current_col]}{chess_board_dict['rows'][new_row]}"
+        print(f"Game over! {current_player} pawn is promoted to a queen at {square}.")
         break
 
-    chess_board[current_row][current_col] = "-"
-    current_positions[current_player] = [new_row, new_col]
-    chess_board[new_row][new_col] = current_player[0].lower()
+    players_info[current_player]['position'] = (new_row, current_col)
     players.rotate(1)
-
-# test inputs:
-
-# - - - - - - b -
-# - - - - - - - -
-# - - - - - - - -
-# - - - - - - - -
-# - - - - - - - -
-# - w - - - - - -
-# - - - - - - - -
-# - - - - - - - -
-
-# - - - - - - - -
-# - - - - - - - -
-# - - - - - - - -
-# - - - - - - - -
-# - - - - - - - -
-# b - - - - - - -
-# - w - - - - - -
-# - - - - - - - -

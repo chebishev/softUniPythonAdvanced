@@ -82,6 +82,7 @@ for k, v in items.items():
     print(f"- {v} {k}")
 for row in workshop:
     print(' '.join(row))
+
 # test inputs:
 
 # 6, 5

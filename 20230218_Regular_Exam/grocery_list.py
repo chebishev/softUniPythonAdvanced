@@ -10,6 +10,8 @@ def shop_from_grocery_list(budget, grocery_list, *products_with_prices):
             if budget - products[k] >= 0:
                 budget -= products[k]
                 grocery_list.remove(k)
+            else:
+                break
 
     if not grocery_list:
         return f"Shopping is successful. Remaining budget: {budget:.2f}."

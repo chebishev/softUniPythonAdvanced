@@ -5,28 +5,24 @@ additional_consumption_index = deque([int(x) for x in input().split()])
 needed_quantities = deque([int(x) for x in input().split()])
 
 reached_altitudes = []
-current_index = 1
-while initial_fuel and additional_consumption_index and needed_quantities:
-    current_fuel = initial_fuel[-1]
-    current_consumption_index = additional_consumption_index[0]
-    current_quantity = needed_quantities[0]
-    if current_fuel - current_consumption_index >= current_quantity:
-        print(f"John has reached: Altitude {current_index}")
-        reached_altitudes.append(f"Altitude {current_index}")
-        needed_quantities.popleft()
-    else:
-        break
-    current_index += 1
-    initial_fuel.pop()
-    additional_consumption_index.popleft()
 
-if len(reached_altitudes) == 4:
-    print("John has reached all the altitudes and managed to reach the top!")
-elif not reached_altitudes:
-    print("John failed to reach the top.\nJohn didn't reach any altitude.")
+for index in range(1, 5):
+    current_fuel = initial_fuel.pop()
+    current_consumption_index = additional_consumption_index.popleft()
+    current_quantity = needed_quantities.popleft()
+    if current_fuel - current_consumption_index >= current_quantity:
+        print(f"John has reached: Altitude {index}")
+        reached_altitudes.append(f"Altitude {index}")
+    else:
+        print(f"John did not reach: Altitude {index}")
+        if not reached_altitudes:
+            print("John failed to reach the top.\nJohn didn't reach any altitude.")
+            break
+        else:
+            print("John failed to reach the top.\nReached altitudes:", ", ".join(reached_altitudes))
+            break
 else:
-    print(f"John did not reach: Altitude {current_index}")
-    print("John failed to reach the top.\nReached altitudes:", ", ".join(reached_altitudes))
+    print("John has reached all the altitudes and managed to reach the top!")
 
 # 200 90 40 100
 # 20 40 30 50

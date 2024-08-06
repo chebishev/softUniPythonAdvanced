@@ -10,3 +10,4 @@ SoftUni works directly with over 100 technology companies and has an active comm
 - Python Advanced Regular Exam - 22 June 2024: https://www.youtube.com/watch?v=72zoMb43P-s
 - Python Advanced Retake Exam - 10 April 2024: https://youtu.be/Y3Ewz-QMubI
 - Python Advanced Exam - 17 February 2024: https://youtu.be/HHp8vHA98ko
+- Python Advanced Retake Exam - 13 December 2023: https://youtu.be/LxCBOdwh0_A
